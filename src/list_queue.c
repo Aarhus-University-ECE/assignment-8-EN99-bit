@@ -3,12 +3,19 @@
 
 void init_queue(queue *q)
 {
-  // Add your init_queue
+q->front = NULL;
+q->size = 0;
+q->rear = NULL;
 }
 
 int empty(queue *q)
 {
-  // Add your empty function  
+if (q->size = NULL){
+  return 1; //return true if size is NULL/empty
+}
+else{
+  return 0; //return false if size
+}
 }
 
 void enqueue(queue *q, int x)

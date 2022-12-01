@@ -1,4 +1,5 @@
 #include "list_queue.h"
+#include <assert.h>
 
 void init_queue(queue *q) // if front and rear points are both NULL, it means
 {
@@ -27,7 +28,7 @@ void enqueue(queue *q, int x) // Function to add an element to the queue
   element->data = x;    // with x as data and NULL as last in next*
   element->next = NULL; // last element in queue always points at NULL
 
-  if (q->rear == 0)
+  if (q->rear == NULL)
   {
     q->rear = element;
     q->front = element;
@@ -47,7 +48,25 @@ void enqueue(queue *q, int x) // Function to add an element to the queue
   q->size++;
 }
 
-int dequeue(queue *q)// Add your dequeue function
+int dequeue(queue *q) // Add your dequeue function
 {
-  
+  // assert(q->size > 0); // assert that queue is not empty
+
+  if (q->size <= 0)
+  {
+    q->front = NULL;
+    q->rear = NULL;
+    return -1; // function must return something - error code return
+  }
+  else if (q->size > 0)
+  {
+    int data = q->front->data;
+    qnode *tmp = q->front;     // store old_front in node because we have to free it later
+    q->front = q->front->next; // if queue is not empty then remove top of queue and take one from size
+    q->size = q->size - 1;
+
+    free(tmp);
+
+    return data;
+  }
 }

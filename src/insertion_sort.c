@@ -4,9 +4,46 @@
 
 // Add your sort function here
 
+void sort(linked_list *ll_ptr)
+{
+    node_t *prev_node = ll_ptr->head; // doubly linked lists contains 2 pointers
+    node_t *curr_node = ll_ptr->head->next;
+    node_t *track_node;
+
+    while (curr_node != NULL) // loop through the list, while sorting
+    {
+        if (curr_node->data < prev_node->data) //
+        {
+            if (curr_node->data < ll_ptr->head->data) //edge case if curr_node->next is less than head
+            {
+                prev_node->next = curr_node->next;
+                curr_node->next = ll_ptr->head;
+                ll_ptr->head = curr_node;
+            }
+            else
+            {
+                track_node = ll_ptr->head;
+                while (track_node->next->data < curr_node->data)
+                {
+                    track_node = track_node->next;
+                }
+                prev_node->next = curr_node->next; // Perform insertion
+                curr_node->next = track_node->next;
+                track_node->next = curr_node;
+            }
+            curr_node = prev_node->next; //Update current so i can continue sorting
+        }
+        else
+        {
+            prev_node = curr_node;
+            curr_node = prev_node->next;
+        }
+    }
+}
+
 // function to loop from the beginning of the array until curr
 //  NULL is returned if ll_ptr is an empty list, or no element in ll_ptr points to p
-node_t *find_previous(linked_list *ll_ptr, node_t *p)
+/*node_t *find_previous(linked_list *ll_ptr, node_t *p)
 { // p = pointer we would like the previous node to the current node
     assert(ll_ptr != NULL && p != NULL);
 
@@ -85,4 +122,4 @@ void sort(linked_list *ll_ptr) // Sort function to sort unsorted arrays
     }
 
     // node_t *temp = (node*) malloc(sizeof(node));
-}
+}*/
